@@ -35,7 +35,7 @@ class API(object):
     home_timeline = bind_api(
         path = '/statuses/home_timeline.json',
         payload_type = 'status', payload_list = True,
-        allowed_param = ['since_id', 'max_id', 'count', 'page'],
+        allowed_param = ['since_id', 'max_id', 'count', 'page', 'include_entities'],
         require_auth = True
     )
 
@@ -43,7 +43,7 @@ class API(object):
     friends_timeline = bind_api(
         path = '/statuses/friends_timeline.json',
         payload_type = 'status', payload_list = True,
-        allowed_param = ['since_id', 'max_id', 'count', 'page'],
+        allowed_param = ['since_id', 'max_id', 'count', 'page', 'include_entities'],
         require_auth = True
     )
 
@@ -52,14 +52,14 @@ class API(object):
         path = '/statuses/user_timeline.json',
         payload_type = 'status', payload_list = True,
         allowed_param = ['id', 'user_id', 'screen_name', 'since_id',
-                          'max_id', 'count', 'page', 'include_rts']
+                          'max_id', 'count', 'page', 'include_rts', 'include_entities']
     )
 
     """ statuses/mentions """
     mentions = bind_api(
         path = '/statuses/mentions.json',
         payload_type = 'status', payload_list = True,
-        allowed_param = ['since_id', 'max_id', 'count', 'page'],
+        allowed_param = ['since_id', 'max_id', 'count', 'page', 'include_entities'],
         require_auth = True
     )
 
@@ -75,7 +75,7 @@ class API(object):
     retweeted_by = bind_api(
         path = '/statuses/{id}/retweeted_by.json',
         payload_type = 'status', payload_list = True,
-        allowed_param = ['id', 'count', 'page'],
+        allowed_param = ['id', 'count', 'page', 'include_entities'],
         require_auth = True
     )
 
@@ -91,7 +91,7 @@ class API(object):
     retweeted_by_ids = bind_api(
         path = '/statuses/{id}/retweeted_by/ids.json',
         payload_type = 'ids',
-        allowed_param = ['id', 'count', 'page'],
+        allowed_param = ['id', 'count', 'page', 'include_entities'],
         require_auth = True
     )
 
@@ -99,7 +99,7 @@ class API(object):
     retweeted_by_me = bind_api(
         path = '/statuses/retweeted_by_me.json',
         payload_type = 'status', payload_list = True,
-        allowed_param = ['since_id', 'max_id', 'count', 'page'],
+        allowed_param = ['since_id', 'max_id', 'count', 'page', 'include_entities'],
         require_auth = True
     )
 
@@ -107,7 +107,7 @@ class API(object):
     retweeted_to_me = bind_api(
         path = '/statuses/retweeted_to_me.json',
         payload_type = 'status', payload_list = True,
-        allowed_param = ['since_id', 'max_id', 'count', 'page'],
+        allowed_param = ['since_id', 'max_id', 'count', 'page', 'include_entities'],
         require_auth = True
     )
 
@@ -115,7 +115,7 @@ class API(object):
     retweets_of_me = bind_api(
         path = '/statuses/retweets_of_me.json',
         payload_type = 'status', payload_list = True,
-        allowed_param = ['since_id', 'max_id', 'count', 'page'],
+        allowed_param = ['since_id', 'max_id', 'count', 'page', 'include_entities'],
         require_auth = True
     )
 
@@ -123,7 +123,7 @@ class API(object):
     get_status = bind_api(
         path = '/statuses/show.json',
         payload_type = 'status',
-        allowed_param = ['id']
+        allowed_param = ['id', 'include_entities']
     )
 
     """ statuses/update """
@@ -131,7 +131,8 @@ class API(object):
         path = '/statuses/update.json',
         method = 'POST',
         payload_type = 'status',
-        allowed_param = ['status', 'in_reply_to_status_id', 'lat', 'long', 'source', 'place_id'],
+        allowed_param = ['status', 'in_reply_to_status_id', 'lat', 'long',
+                         'source', 'place_id', 'include_entities'],
         require_auth = True
     )
 
@@ -140,7 +141,7 @@ class API(object):
         path = '/statuses/destroy.json',
         method = 'DELETE',
         payload_type = 'status',
-        allowed_param = ['id'],
+        allowed_param = ['id', 'include_entities'],
         require_auth = True
     )
 
@@ -149,7 +150,7 @@ class API(object):
         path = '/statuses/retweet/{id}.json',
         method = 'POST',
         payload_type = 'status',
-        allowed_param = ['id'],
+        allowed_param = ['id', 'include_entities'],
         require_auth = True
     )
 
@@ -157,7 +158,7 @@ class API(object):
     retweets = bind_api(
         path = '/statuses/retweets/{id}.json',
         payload_type = 'status', payload_list = True,
-        allowed_param = ['id', 'count'],
+        allowed_param = ['id', 'count', 'include_entities'],
         require_auth = True
     )
 
@@ -165,7 +166,7 @@ class API(object):
     get_user = bind_api(
         path = '/users/show.json',
         payload_type = 'user',
-        allowed_param = ['id', 'user_id', 'screen_name']
+        allowed_param = ['id', 'user_id', 'screen_name', 'include_entities']
     )
 
     """ Perform bulk look up of users from user ID or screenname """
@@ -175,7 +176,7 @@ class API(object):
     _lookup_users = bind_api(
         path = '/users/lookup.json',
         payload_type = 'user', payload_list = True,
-        allowed_param = ['user_id', 'screen_name'],
+        allowed_param = ['user_id', 'screen_name', 'include_entities'],
     )
 
     """ Get the authenticated user """
@@ -187,28 +188,28 @@ class API(object):
         path = '/users/search.json',
         payload_type = 'user', payload_list = True,
         require_auth = True,
-        allowed_param = ['q', 'per_page', 'page']
+        allowed_param = ['q', 'per_page', 'page', 'include_entities']
     )
 
     """ statuses/friends """
     friends = bind_api(
         path = '/statuses/friends.json',
         payload_type = 'user', payload_list = True,
-        allowed_param = ['id', 'user_id', 'screen_name', 'page', 'cursor']
+        allowed_param = ['id', 'user_id', 'screen_name', 'page', 'cursor', 'include_entities']
     )
 
     """ statuses/followers """
     followers = bind_api(
         path = '/statuses/followers.json',
         payload_type = 'user', payload_list = True,
-        allowed_param = ['id', 'user_id', 'screen_name', 'page', 'cursor']
+        allowed_param = ['id', 'user_id', 'screen_name', 'page', 'cursor', 'include_entities']
     )
 
     """ direct_messages """
     direct_messages = bind_api(
         path = '/direct_messages.json',
         payload_type = 'direct_message', payload_list = True,
-        allowed_param = ['since_id', 'max_id', 'count', 'page'],
+        allowed_param = ['since_id', 'max_id', 'count', 'page', 'include_entities'],
         require_auth = True
     )
 
@@ -224,7 +225,7 @@ class API(object):
     sent_direct_messages = bind_api(
         path = '/direct_messages/sent.json',
         payload_type = 'direct_message', payload_list = True,
-        allowed_param = ['since_id', 'max_id', 'count', 'page'],
+        allowed_param = ['since_id', 'max_id', 'count', 'page', 'include_entities'],
         require_auth = True
     )
 
@@ -233,7 +234,7 @@ class API(object):
         path = '/direct_messages/new.json',
         method = 'POST',
         payload_type = 'direct_message',
-        allowed_param = ['user', 'screen_name', 'user_id', 'text'],
+        allowed_param = ['user', 'screen_name', 'user_id', 'text', 'include_entities'],
         require_auth = True
     )
 
@@ -242,7 +243,7 @@ class API(object):
         path = '/direct_messages/destroy.json',
         method = 'DELETE',
         payload_type = 'direct_message',
-        allowed_param = ['id'],
+        allowed_param = ['id', 'include_entities'],
         require_auth = True
     )
 
@@ -251,7 +252,7 @@ class API(object):
         path = '/friendships/create.json',
         method = 'POST',
         payload_type = 'user',
-        allowed_param = ['id', 'user_id', 'screen_name', 'follow'],
+        allowed_param = ['id', 'user_id', 'screen_name', 'follow', 'include_entities'],
         require_auth = True
     )
 
@@ -260,7 +261,7 @@ class API(object):
         path = '/friendships/destroy.json',
         method = 'DELETE',
         payload_type = 'user',
-        allowed_param = ['id', 'user_id', 'screen_name'],
+        allowed_param = ['id', 'user_id', 'screen_name', 'include_entities'],
         require_auth = True
     )
 
@@ -345,7 +346,7 @@ class API(object):
     set_delivery_device = bind_api(
         path = '/account/update_delivery_device.json',
         method = 'POST',
-        allowed_param = ['device'],
+        allowed_param = ['device', 'include_entities'],
         payload_type = 'user',
         require_auth = True
     )
@@ -357,7 +358,7 @@ class API(object):
         payload_type = 'user',
         allowed_param = ['profile_background_color', 'profile_text_color',
                           'profile_link_color', 'profile_sidebar_fill_color',
-                          'profile_sidebar_border_color'],
+                          'profile_sidebar_border_color', 'include_entities'],
         require_auth = True
     )
 
@@ -368,6 +369,7 @@ class API(object):
             path = '/account/update_profile_image.json',
             method = 'POST',
             payload_type = 'user',
+            allowed_param = ['include_entities'],
             require_auth = True
         )(self, post_data=post_data, headers=headers)
 
@@ -378,7 +380,7 @@ class API(object):
             path = '/account/update_profile_background_image.json',
             method = 'POST',
             payload_type = 'user',
-            allowed_param = ['tile'],
+            allowed_param = ['tile', 'include_entities'],
             require_auth = True
         )(self, post_data=post_data, headers=headers)
 
@@ -387,7 +389,7 @@ class API(object):
         path = '/account/update_profile.json',
         method = 'POST',
         payload_type = 'user',
-        allowed_param = ['name', 'url', 'location', 'description'],
+        allowed_param = ['name', 'url', 'location', 'description', 'include_entities'],
         require_auth = True
     )
 
@@ -395,7 +397,7 @@ class API(object):
     favorites = bind_api(
         path = '/favorites.json',
         payload_type = 'status', payload_list = True,
-        allowed_param = ['id', 'max_id', 'page']
+        allowed_param = ['id', 'page', 'include_entities']
     )
 
     """ favorites/create """
@@ -403,7 +405,7 @@ class API(object):
         path = '/favorites/create/{id}.json',
         method = 'POST',
         payload_type = 'status',
-        allowed_param = ['id'],
+        allowed_param = ['id', 'include_entities'],
         require_auth = True
     )
 
@@ -412,7 +414,7 @@ class API(object):
         path = '/favorites/destroy/{id}.json',
         method = 'DELETE',
         payload_type = 'status',
-        allowed_param = ['id'],
+        allowed_param = ['id', 'include_entities'],
         require_auth = True
     )
 
@@ -421,7 +423,7 @@ class API(object):
         path = '/notifications/follow.json',
         method = 'POST',
         payload_type = 'user',
-        allowed_param = ['id', 'user_id', 'screen_name'],
+        allowed_param = ['id', 'user_id', 'screen_name', 'include_entities'],
         require_auth = True
     )
 
@@ -430,7 +432,7 @@ class API(object):
         path = '/notifications/leave.json',
         method = 'POST',
         payload_type = 'user',
-        allowed_param = ['id', 'user_id', 'screen_name'],
+        allowed_param = ['id', 'user_id', 'screen_name', 'include_entities'],
         require_auth = True
     )
 
@@ -439,7 +441,7 @@ class API(object):
         path = '/blocks/create.json',
         method = 'POST',
         payload_type = 'user',
-        allowed_param = ['id', 'user_id', 'screen_name'],
+        allowed_param = ['id', 'user_id', 'screen_name', 'include_entities'],
         require_auth = True
     )
 
@@ -448,7 +450,7 @@ class API(object):
         path = '/blocks/destroy.json',
         method = 'DELETE',
         payload_type = 'user',
-        allowed_param = ['id', 'user_id', 'screen_name'],
+        allowed_param = ['id', 'user_id', 'screen_name', 'include_entities'],
         require_auth = True
     )
 
@@ -457,7 +459,7 @@ class API(object):
         try:
             bind_api(
                 path = '/blocks/exists.json',
-                allowed_param = ['id', 'user_id', 'screen_name'],
+                allowed_param = ['id', 'user_id', 'screen_name', 'include_entities'],
                 require_auth = True
             )(self, *args, **kargs)
         except TweepError:
@@ -468,7 +470,7 @@ class API(object):
     blocks = bind_api(
         path = '/blocks/blocking.json',
         payload_type = 'user', payload_list = True,
-        allowed_param = ['page'],
+        allowed_param = ['page', 'include_entities'],
         require_auth = True
     )
 
@@ -484,7 +486,7 @@ class API(object):
         path = '/report_spam.json',
         method = 'POST',
         payload_type = 'user',
-        allowed_param = ['id', 'user_id', 'screen_name'],
+        allowed_param = ['id', 'user_id', 'screen_name', 'include_entities'],
         require_auth = True
     )
 
@@ -581,7 +583,7 @@ class API(object):
     list_timeline = bind_api(
         path = '/{owner}/lists/{slug}/statuses.json',
         payload_type = 'status', payload_list = True,
-        allowed_param = ['owner', 'slug', 'since_id', 'max_id', 'per_page', 'page']
+        allowed_param = ['owner', 'slug', 'since_id', 'max_id', 'per_page', 'page', 'include_entities']
     )
 
     get_list = bind_api(
@@ -611,14 +613,15 @@ class API(object):
     list_members = bind_api(
         path = '/{owner}/{slug}/members.json',
         payload_type = 'user', payload_list = True,
-        allowed_param = ['owner', 'slug', 'cursor']
+        allowed_param = ['owner', 'slug', 'cursor', 'include_entities']
     )
 
     def is_list_member(self, owner, slug, user_id):
         try:
             return bind_api(
                 path = '/%s/%s/members/%s.json' % (owner, slug, user_id),
-                payload_type = 'user'
+                payload_type = 'user',
+                allowed_param = ['include_entities']
             )(self)
         except TweepError:
             return False
@@ -642,14 +645,15 @@ class API(object):
     list_subscribers = bind_api(
         path = '/{owner}/{slug}/subscribers.json',
         payload_type = 'user', payload_list = True,
-        allowed_param = ['owner', 'slug', 'cursor']
+        allowed_param = ['owner', 'slug', 'cursor', 'include_entities']
     )
 
     def is_subscribed_list(self, owner, slug, user_id):
         try:
             return bind_api(
                 path = '/%s/%s/subscribers/%s.json' % (owner, slug, user_id),
-                payload_type = 'user'
+                payload_type = 'user',
+                allowed_param = ['include_entities']
             )(self)
         except TweepError:
             return False
